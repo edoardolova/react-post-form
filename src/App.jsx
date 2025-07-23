@@ -11,16 +11,29 @@ function App() {
 
   const isFormValid = postData.author && postData.title && postData.body;
 
-  useEffect(()=>{
-      console.log(postData);
-  }, [postData]);
+
+  function handlePostSubmit(e){
+    e.preventDefault();
+    fetch('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    })
+    .then((res) => res.json())
+    .then((data) => console.log('post creato:', data))
+    .catch((err) =>{
+      console.error('errore:', err)
+    })
+  };
 
   return (
     <>
       <div className="container">
         <h1 className='py-3'>Carica il tuo post</h1>
 
-        <form className='border p-4 rounded bg-light'>
+        <form className='border p-4 rounded bg-light' onSubmit={handlePostSubmit}>
           <div className="mb-3">
             <label htmlFor="author" className="form-label">Author</label>
             <input type="text" className="form-control" id="author" placeholder='Nome' value={postData.author} onChange={e => setPostData({...postData, author: e.target.value})}/>
@@ -42,7 +55,7 @@ function App() {
           </div>
 
           <div className='d-flex'>
-            <button type="submit" className="btn btn-primary w-25 mx-auto" disabled={!isFormValid}>Invia</button>
+            <button type="submit" className="btn btn-primary w-25 mx-auto" disabled={!isFormValid} >Invia</button>
           </div>
         </form>
       </div>
