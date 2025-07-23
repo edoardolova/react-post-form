@@ -8,12 +8,17 @@ function App() {
     body: '',
     public: false
   })
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [status, setStatus] = useState(null);
 
   const isFormValid = postData.author && postData.title && postData.body;
 
 
+
   function handlePostSubmit(e){
     e.preventDefault();
+    setStatus('loading');
+    openModal();    
     fetch('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts',{
       method: 'POST',
       headers: {
@@ -22,11 +27,31 @@ function App() {
       body: JSON.stringify(postData)
     })
     .then((res) => res.json())
-    .then((data) => console.log('post creato:', data))
+    .then((data) => {
+      setStatus('success');
+      console.log('post creato:', data)
+    })
     .catch((err) =>{
+      setStatus('error');
       console.error('errore:', err)
     })
   };
+
+  function openModal() {
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+    setStatus(null);
+    setPostData({
+      author: '',
+      title: '',
+      body: '',
+      public: false
+    })
+
+  }
 
   return (
     <>
@@ -58,6 +83,22 @@ function App() {
             <button type="submit" className="btn btn-primary w-25 mx-auto" disabled={!isFormValid} >Invia</button>
           </div>
         </form>
+
+        {isModalOpen && (
+          <div className="modal-overlay d-flex align-items-center justify-content-center position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75">
+            <div className='border rounded p-5 bg-dark text-white'>
+              <h2 className="mb-4 text-center">Stato della richiesta</h2>
+              <p className="mb-3 text-center">
+                {status === 'loading' && 'Invio in corso...'}
+                {status === 'success' && 'Il post è stato creato con successo!'}
+                {status === 'error' && 'Si è verificato un errore durante l\'invio.'}
+              </p>
+              <div className="d-flex">
+                <button type="button" className="btn btn-outline-light mx-auto" onClick={closeModal}> Chiudi </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   )
