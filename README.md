@@ -1,12 +1,21 @@
-# React + Vite
+# 📝 React Blog Post Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una semplice applicazione React che consente agli utenti di compilare un modulo per la creazione di un post e inviarlo a un'API. Durante l'invio, viene visualizzata una modale che mostra lo stato della richiesta.
 
-Currently, two official plugins are available:
+## 🚀 Funzionalità
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Form con campi:
+  - Autore (stringa)
+  - Titolo (stringa)
+  - Contenuto del post (stringa)
+  - Checkbox per indicare se il post è pubblico (booleano)
+- Validazione del form (tutti i campi obbligatori eccetto la checkbox)
+- Chiamata `POST` a un endpoint esterno
+- Modale che mostra lo stato della richiesta: `loading`, `success`, `error`
+- Reset automatico del form al termine dell'invio
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologie usate
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Bootstrap
+- Fetch API
